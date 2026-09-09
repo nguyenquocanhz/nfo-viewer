@@ -184,6 +184,45 @@
     return el("div", { class: "field" }, [el("dt", { text: label }), dd]);
   }
 
+  /**
+   * Khung anh. Anh trong .nfo la link toi CDN cua nen tang, nen rat hay chet:
+   * link het han, CDN chan hotlink, hoac may dang offline. Truong hop do phai
+   * hien ro la "khong tai duoc" kem link bam duoc, chu khong de o trong.
+   */
+  function gallery(d) {
+    var wrap = el("div", { class: "block" }, [
+      el("h3", { text: d.isImagePost
+        ? "Ảnh trong bài (" + d.images.length + ")"
+        : "Ảnh bìa" })
+    ]);
+    var grid = el("div", { class: "gallery" });
+
+    d.images.forEach(function (img, i) {
+      var cell = el("figure", { class: "shot" });
+      var ph = el("div", { class: "ph", text: "đang tải…" });
+      var im = el("img", {
+        src: img.url, alt: (d.title || "ảnh") + " — " + (i + 1),
+        loading: "lazy", referrerpolicy: "no-referrer"
+      });
+      im.addEventListener("load", function () { ph.remove(); });
+      im.addEventListener("error", function () {
+        im.remove();
+        ph.replaceChildren(
+          el("span", { class: "ph-x", text: "không tải được" }),
+          el("a", { href: img.url, target: "_blank", rel: "noreferrer noopener",
+                    class: "ph-link", text: "mở link" })
+        );
+      });
+      cell.appendChild(ph);
+      cell.appendChild(im);
+      if (img.aspect) cell.appendChild(el("figcaption", { text: img.aspect }));
+      grid.appendChild(cell);
+    });
+
+    wrap.appendChild(grid);
+    return wrap;
+  }
+
   function renderDetail() {
     var box = $("#detail");
     box.replaceChildren();
@@ -215,6 +254,8 @@
 
     if (d.plot) box.appendChild(el("p", { class: "plot", text: d.plot }));
 
+    if (d.images.length) box.appendChild(gallery(d));
+
     var miss = NFO.missing(d);
     if (miss.length) {
       box.appendChild(el("div", { class: "block" }, [
@@ -225,7 +266,7 @@
       ]));
     }
 
-    box.appendChild(el("div", { class: "block" }, [
+    if (!d.isImagePost) box.appendChild(el("div", { class: "block" }, [
       el("h3", { text: "Luồng hình" }),
       el("dl", { class: "grid2" }, [
         field("Codec", d.video && d.video.codec),
@@ -236,7 +277,7 @@
       ])
     ]));
 
-    box.appendChild(el("div", { class: "block" }, [
+    if (!d.isImagePost) box.appendChild(el("div", { class: "block" }, [
       el("h3", { text: "Luồng tiếng" }),
       el("dl", { class: "grid2" }, [
         field("Codec", d.audio && d.audio.codec),
@@ -250,8 +291,12 @@
       box.appendChild(el("div", { class: "block" }, [
         el("h3", { text: "Thẻ" }),
         el("div", { class: "tags" },
+          // <genre> thuong lap lai the dau tien cua <tag>. Hien ca hai thi nguoi
+          // doc tuong app bi loi, nen the nao da la genre thi khong hien lai.
           d.genres.map(function (g) { return el("span", { class: "tag genre", text: g }); })
-            .concat(d.tags.map(function (t) { return el("span", { class: "tag", text: t }); })))
+            .concat(d.tags
+              .filter(function (t) { return d.genres.indexOf(t) < 0; })
+              .map(function (t) { return el("span", { class: "tag", text: t }); })))
       ]));
     }
 
@@ -377,7 +422,12 @@
     Object.keys(SAMPLES).forEach(function (name) {
       addResult(NFO.parse(SAMPLES[name], name), true);
     });
-    selected = rows.findIndex(function (r) { return r.ok; });
+    // Mo len chon san mot mau DAY DU va CO ANH, de nguoi mo lan dau thay ngay
+    // app lam duoc gi, thay vi roi vao mot file thieu du lieu.
+    selected = rows.findIndex(function (r) {
+      return r.ok && r.data.images.length && NFO.missing(r.data).length === 0;
+    });
+    if (selected < 0) selected = rows.findIndex(function (r) { return r.ok; });
     if (selected < 0) selected = null;
   }
 

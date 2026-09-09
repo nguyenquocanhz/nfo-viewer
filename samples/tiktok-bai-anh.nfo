@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<movie>
+    <title>Bộ ảnh Đà Lạt sáng sớm</title>
+    <plot>6 tấm chụp lúc sương chưa tan #dalat #suongsom #film</plot>
+    <studio>TikTok</studio>
+    <thumb aspect="poster">https://picsum.photos/seed/dalat1/480/640</thumb>
+    <thumb aspect="poster">https://picsum.photos/seed/dalat2/480/640</thumb>
+    <thumb aspect="poster">https://picsum.photos/seed/dalat3/480/640</thumb>
+    <thumb aspect="poster">https://picsum.photos/seed/dalat4/480/640</thumb>
+    <thumb aspect="poster">https://picsum.photos/seed/dalat5/480/640</thumb>
+    <thumb aspect="poster">https://p16-sign.tiktokcdn.com/link-da-het-han.jpeg</thumb>
+    <director>Mai Linh</director>
+    <artist>Mai Linh</artist>
+    <uniqueid type="tiktok" default="true">7000000000000000002</uniqueid>
+    <premiered>2026-02-09</premiered>
+    <year>2026</year>
+    <tag>dalat</tag>
+    <tag>suongsom</tag>
+    <tag>film</tag>
+    <genre>dalat</genre>
+    <source>tiktok</source>
+    <url>https://www.tiktok.com/@mailinh/photo/7000000000000000002</url>
+    <stat_likes>4820</stat_likes>
+    <license>GPL-3.0-or-later</license>
+</movie>

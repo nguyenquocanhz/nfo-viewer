@@ -9,6 +9,8 @@ tiếng. Quan trọng hơn: **thấy file nào đang thiếu gì**, để biết
 
 ![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)
 
+![Giao diện nfo-viewer](docs/screenshot.png)
+
 ---
 
 ## Dùng thế nào
@@ -21,9 +23,9 @@ cd nfo-viewer
 # rồi mở index.html bằng trình duyệt
 ```
 
-App mở lên đã có sẵn 5 file mẫu trong `samples/` để bạn thấy ngay nó làm gì —
-trong đó cố ý có **một file hỏng XML** và **một file thiếu dữ liệu**, vì đó là
-hai thứ bạn sẽ gặp thật.
+App mở lên đã có sẵn 6 file mẫu trong `samples/` để bạn thấy ngay nó làm gì —
+trong đó cố ý có **một file hỏng XML**, **một file thiếu dữ liệu**, và **một bài
+ảnh có link ảnh đã chết**, vì đó là những thứ bạn sẽ gặp thật.
 
 **Nội dung file không đi đâu cả.** Việc đọc diễn ra hoàn toàn trong trình duyệt
 bằng `FileReader` + `DOMParser`; không có yêu cầu mạng nào mang dữ liệu ra
@@ -39,6 +41,8 @@ ngoài. Mở tab Network của trình duyệt mà kiểm tra.
 | **Báo thiếu** | Mỗi file hiện *Đầy đủ* / *Thiếu N mục* / *Không đọc được*, kèm danh sách cụ thể |
 | **Xuất** | JSON (đủ trường) hoặc CSV (mở được bằng Excel, có BOM nên không lỗi tiếng Việt) |
 | **Xem XML gốc** | Mở phần *Xem XML gốc* ở cuối khung chi tiết |
+| **Xem ảnh** | Hiện `<thumb>` / `<fanart>`; link ảnh chết thì báo rõ kèm nút mở link |
+| **Bài ảnh** | Nhận ra album ảnh (TikTok/Douyin) và không báo thiếu "thông số hình/tiếng" |
 | **Sáng / tối** | Theo hệ điều hành, và có nút đổi tay |
 
 ## Đọc được những gì
@@ -60,6 +64,23 @@ app xử lý sẵn:
   nhầm của `<video>`.
 - **Thẻ riêng.** Các thẻ `<stat_*>` (lượt xem, lượt thích) là phần mở rộng —
   Kodi bỏ qua chúng, app gom lại và hiện ra.
+- **Ảnh.** Đọc mọi thẻ `<thumb>` (kèm thuộc tính `aspect`) và `<fanart>`, kể cả
+  dạng `<fanart>` bọc `<thumb>` bên trong. URL trùng chỉ tính một lần.
+
+### Bài ảnh
+
+Album ảnh của TikTok/Douyin không có luồng hình lẫn tiếng — chỉ có danh sách
+ảnh. Nếu không nhận ra điều đó thì mọi bài ảnh đều bị chấm *thiếu thông số
+hình, thiếu thông số tiếng*, một cảnh báo sai hoàn toàn.
+
+App nhận ra bài ảnh khi: **không có luồng hình, không có luồng tiếng, không có
+thời lượng, nhưng có ảnh**. Lúc đó nó đổi nhãn thành *Bài ảnh*, bỏ hai khối
+thông số kia, và chỉ coi là thiếu khi **không có ảnh nào**.
+
+Ảnh trong `.nfo` là link tới CDN của nền tảng nên rất hay chết — link hết hạn,
+CDN chặn hotlink, hoặc máy đang offline. App hiện rõ *không tải được* kèm nút
+mở link, chứ không để ô trống. File mẫu `tiktok-bai-anh.nfo` cố ý có 5 link
+sống và 1 link chết để bạn thấy cả hai trạng thái.
 
 File hỏng không làm hỏng cả mẻ: nó hiện thành một dòng *Không đọc được* kèm lý
 do cụ thể từ trình phân tích XML, các file còn lại vẫn đọc bình thường.
@@ -68,9 +89,12 @@ do cụ thể từ trình phân tích XML, các file còn lại vẫn đọc bì
 
 Mở `tests/test.html` trong trình duyệt. Không cần cài gì.
 
-77 trường hợp: đọc file mẫu, file thiếu dữ liệu, XML hỏng, đầu vào rác (chuỗi
+92 trường hợp: đọc file mẫu, file thiếu dữ liệu, XML hỏng, đầu vào rác (chuỗi
 rỗng, HTML, JSON, `null`), thẻ lồng nhau, năm cách ghi ngày, định dạng số liệu,
-và ký tự đặc biệt (thực thể XML, CDATA, emoji, chữ Trung, tiếng Việt có dấu).
+ký tự đặc biệt (thực thể XML, CDATA, emoji, chữ Trung, tiếng Việt có dấu), và
+bài ảnh (nhiều `<thumb>`, `<fanart>` lồng nhau, URL trùng).
+
+![Kết quả kiểm thử](docs/tests.png)
 
 Test chạy **trong trình duyệt** chứ không phải Node, vì phần đọc dùng
 `DOMParser` — thứ Node không có sẵn. Chạy test ở đúng nơi mã chạy thật thì kết
@@ -85,9 +109,10 @@ assets/
 ├── app.js              bảng, khung chi tiết, kéo-thả, xuất file
 ├── samples.js          file mẫu nhúng sẵn (SINH TỰ ĐỘNG)
 └── style.css
-samples/                5 file .nfo mẫu, thả vào app được
+samples/                6 file .nfo mẫu, thả vào app được
 tests/                  test.html + test.js
 tools/embed-samples.py  sinh lại assets/samples.js từ samples/
+docs/                   ảnh chụp màn hình dùng trong README
 ```
 
 `assets/samples.js` được nhúng sẵn vì trình duyệt chặn `fetch()` tới file nằm

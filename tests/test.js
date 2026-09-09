@@ -233,6 +233,61 @@
   check("the rong -> null chu khong phai chuoi rong",
         trong.ok && trong.data.title === null && trong.data.plot === null);
 
+  // ------------------------------------------------------------------ 8
+
+  section("8. Bai anh: doc nhieu the <thumb>, khong bao thieu nham");
+
+  var anh = NFO.parse(SAMPLES["tiktok-bai-anh.nfo"], "anh.nfo");
+  check("doc duoc file bai anh", anh.ok, anh.error);
+  if (anh.ok) {
+    var a = anh.data;
+    check("doc du 6 anh", a.images.length === 6, a.images.length);
+    check("giu thuoc tinh aspect", a.images[0].aspect === "poster", a.images[0].aspect);
+    check("nhan ra la bai anh", a.isImagePost === true);
+    check("nhan loai doi thanh 'Bài ảnh'", a.kindLabel === "Bài ảnh", a.kindLabel);
+    var ma = NFO.missing(a);
+    check("KHONG bao thieu thong so hinh (bai anh lam gi co)",
+          ma.indexOf("thông số hình") < 0, ma.join(", "));
+    check("KHONG bao thieu thong so tieng",
+          ma.indexOf("thông số tiếng") < 0, ma.join(", "));
+    check("bai anh day du -> khong thieu gi", ma.length === 0, ma.join(", "));
+  }
+
+  // Video binh thuong thi VAN phai bao thieu thong so hinh/tieng
+  var kvideo = NFO.parse(xml(
+    "<movie><title>Video khong co streamdetails</title>" +
+    "<runtime>5</runtime></movie>"), "k.nfo");
+  check("video khong co anh -> khong bi coi la bai anh",
+        kvideo.ok && kvideo.data.isImagePost === false);
+  check("va VAN bao thieu thong so hinh",
+        NFO.missing(kvideo.data).indexOf("thông số hình") >= 0,
+        NFO.missing(kvideo.data).join(", "));
+
+  // Video co anh bia + co streamdetails -> khong phai bai anh
+  var cobia = NFO.parse(SAMPLES["tiktok-chieu-ha-noi.nfo"], "b.nfo");
+  check("video co anh bia van khong phai bai anh",
+        cobia.ok && cobia.data.isImagePost === false);
+  check("van doc duoc anh bia", cobia.ok && cobia.data.images.length >= 1,
+        cobia.ok && cobia.data.images.length);
+
+  // <fanart> boc <thumb> ben trong - dang Kodi hay dung
+  var fan = NFO.parse(xml(
+    "<movie><title>x</title>" +
+    "<fanart><thumb>https://a/1.jpg</thumb><thumb>https://a/2.jpg</thumb></fanart>" +
+    "</movie>"), "f.nfo");
+  check("doc duoc <thumb> nam trong <fanart>",
+        fan.ok && fan.data.images.length === 2, fan.ok && fan.data.images.length);
+
+  var trung = NFO.parse(xml(
+    "<movie><title>x</title><thumb>https://a/1.jpg</thumb>" +
+    "<fanart>https://a/1.jpg</fanart></movie>"), "t2.nfo");
+  check("cung URL o <thumb> va <fanart> -> chi tinh mot lan",
+        trung.ok && trung.data.images.length === 1, trung.ok && trung.data.images.length);
+
+  var khonganh = NFO.parse(xml("<movie><title>x</title><thumb>  </thumb></movie>"), "n.nfo");
+  check("the <thumb> rong -> bo qua",
+        khonganh.ok && khonganh.data.images.length === 0);
+
   // ------------------------------------------------------------------ tong
 
   var sum = document.getElementById("summary");

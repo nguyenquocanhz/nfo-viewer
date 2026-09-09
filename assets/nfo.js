@@ -107,6 +107,42 @@
       .filter(function (p) { return p.name; });
   }
 
+  /**
+   * Doc moi the <thumb>. Kodi cho phep nhieu the, phan biet bang thuoc tinh
+   * `aspect` (poster / banner / landscape / thumb). <fanart> la anh nen rieng.
+   */
+  function readImages(root) {
+    var out = [];
+    Array.prototype.forEach.call(
+      root.querySelectorAll(":scope > thumb"), function (el) {
+        var url = (el.textContent || "").trim();
+        if (url) out.push({ url: url, aspect: el.getAttribute("aspect") || null });
+      });
+    Array.prototype.forEach.call(
+      root.querySelectorAll(":scope > fanart"), function (el) {
+        // Phai xet <thumb> con TRUOC. textContent cua mot the boc gop het chu
+        // cua ca cac the con lai thanh mot chuoi dinh lien, nen doc no truoc
+        // se ra mot URL rac kieu "https://a/1.jpghttps://a/2.jpg".
+        var kids = el.querySelectorAll("thumb");
+        if (kids.length) {
+          Array.prototype.forEach.call(kids, function (t) {
+            var u = (t.textContent || "").trim();
+            if (u) out.push({ url: u, aspect: "fanart" });
+          });
+          return;
+        }
+        var url = (el.textContent || "").trim();
+        if (url) out.push({ url: url, aspect: "fanart" });
+      });
+    // bo trung URL, giu thu tu
+    var seen = {};
+    return out.filter(function (i) {
+      if (seen[i.url]) return false;
+      seen[i.url] = 1;
+      return true;
+    });
+  }
+
   function readIds(root) {
     return Array.prototype.map
       .call(root.querySelectorAll(":scope > uniqueid"), function (el) {
@@ -164,11 +200,8 @@
     var source = text(root, "source");
     var studio = text(root, "studio");
 
-    return {
-      ok: true,
-      filename: filename,
-      data: {
-        kind: kind,
+    var data = {
+      kind: kind,
         kindLabel: ROOTS[kind],
         title: text(root, "title") || text(root, "originaltitle"),
         originalTitle: text(root, "originaltitle"),
@@ -180,6 +213,7 @@
         url: text(root, "url") || text(root, "trailer"),
         author: text(root, "director") || text(root, "artist"),
         thumb: text(root, "thumb"),
+        images: readImages(root),
         genres: all(root, "genre"),
         tags: all(root, "tag"),
         people: readPeople(root),
@@ -191,8 +225,15 @@
         originalFilename: text(root, "original_filename"),
         stats: readStats(root),
         raw: xmlText
-      }
     };
+
+    // Bai ANH (album anh cua TikTok / Douyin) khong co luong hinh lan tieng,
+    // chi co danh sach anh. Neu khong nhan ra thi app se bao "thieu thong so
+    // hinh, thieu thong so tieng" cho moi bai anh - canh bao sai hoan toan.
+    data.isImagePost = !video && !audio && !data.duration && data.images.length > 0;
+    if (data.isImagePost) data.kindLabel = "Bài ảnh";
+
+    return { ok: true, filename: filename, data: data };
   }
 
   /** Cac the <stat_*> la phan rieng, Kodi bo qua chung. Gom lai de hien. */
@@ -269,8 +310,14 @@
     if (!d.author) out.push("tác giả");
     if (!d.plot) out.push("mô tả");
     if (!d.tags.length && !d.genres.length) out.push("hashtag");
-    if (!d.video) out.push("thông số hình");
-    if (!d.audio) out.push("thông số tiếng");
+    if (d.isImagePost) {
+      // Bai anh thi khong co luong hinh/tieng de ma thieu. Doi lai, khong co
+      // anh nao moi la thieu.
+      if (!d.images.length) out.push("ảnh");
+    } else {
+      if (!d.video) out.push("thông số hình");
+      if (!d.audio) out.push("thông số tiếng");
+    }
     if (!d.ids.length) out.push("mã định danh");
     return out;
   }
