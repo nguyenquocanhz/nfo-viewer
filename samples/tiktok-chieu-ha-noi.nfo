@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<movie>
+    <title>Chiều Hà Nội</title>
+    <originaltitle>Chiều Hà Nội</originaltitle>
+    <plot>Đi dạo một vòng hồ lúc tan tầm #hanoi #chieuta</plot>
+    <outline>Đi dạo một vòng hồ lúc tan tầm #hanoi #chieuta</outline>
+    <runtime>1</runtime>
+    <studio>TikTok</studio>
+    <thumb aspect="poster">https://cdn.example/cover.jpg</thumb>
+    <fanart>https://cdn.example/cover.jpg</fanart>
+    <director>Quốc Anh</director>
+    <artist>Quốc Anh</artist>
+    <actor>
+        <name>Quốc Anh</name>
+        <role>Uploader</role>
+        <thumb>https://cdn.example/av.jpg</thumb>
+        <profile>https://www.tiktok.com/@quocanh</profile>
+    </actor>
+    <uniqueid type="tiktok" default="true">7678670892490165512</uniqueid>
+    <premiered>2026-03-14</premiered>
+    <aired>2026-03-14</aired>
+    <year>2026</year>
+    <dateadded>2026-03-14 07:30:00</dateadded>
+    <tag>hanoi</tag>
+    <tag>chieuta</tag>
+    <genre>hanoi</genre>
+    <fileinfo>
+        <streamdetails>
+            <video>
+                <codec>h264</codec>
+                <width>1080</width>
+                <height>1920</height>
+                <aspect>0.5625</aspect>
+                <durationinseconds>23</durationinseconds>
+                <framerate>30.0</framerate>
+            </video>
+            <audio>
+                <codec>aac</codec>
+                <channels>2</channels>
+                <samplingrate>44100</samplingrate>
+                <bitrate>128000</bitrate>
+            </audio>
+        </streamdetails>
+    </fileinfo>
+    <source>tiktok</source>
+    <url>https://www.tiktok.com/@quocanh/video/7678670892490165512</url>
+    <original_filename>Chieu Ha Noi.mp4</original_filename>
+    <stat_likes>120</stat_likes>
+    <stat_views>9000</stat_views>
+    <license>GPL-3.0-or-later</license>
+    <generated_by>Vidly Social Downloader API - 2026-03-14T07:31:02Z</generated_by>
+</movie>

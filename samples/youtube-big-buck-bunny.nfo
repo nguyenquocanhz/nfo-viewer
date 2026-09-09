@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<movie>
+    <title>Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film</title>
+    <originaltitle>Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film</originaltitle>
+    <plot>UHD High Frame rate version of the iconic short film by Blender.</plot>
+    <runtime>11</runtime>
+    <studio>YouTube</studio>
+    <thumb aspect="poster">https://i.ytimg.com/vi/aqz-KE-bpKQ/sddefault.jpg</thumb>
+    <director>Blender</director>
+    <artist>Blender</artist>
+    <actor>
+        <name>Blender</name>
+        <role>Uploader</role>
+        <profile>https://www.youtube.com/channel/UCSMOQeBJ2RAnuFungnQOxLg</profile>
+    </actor>
+    <uniqueid type="youtube" default="true">aqz-KE-bpKQ</uniqueid>
+    <premiered>2014-11-10</premiered>
+    <year>2014</year>
+    <dateadded>2014-11-10 14:05:55</dateadded>
+    <tag>blender</tag>
+    <tag>animation</tag>
+    <tag>4K</tag>
+    <tag>UHD</tag>
+    <genre>blender</genre>
+    <fileinfo>
+        <streamdetails>
+            <video>
+                <codec>vp9</codec>
+                <width>3840</width>
+                <height>2160</height>
+                <aspect>1.7778</aspect>
+                <durationinseconds>635</durationinseconds>
+                <framerate>60.0</framerate>
+            </video>
+            <audio>
+                <codec>aac</codec>
+                <channels>2</channels>
+                <samplingrate>44100</samplingrate>
+                <bitrate>129481</bitrate>
+            </audio>
+        </streamdetails>
+    </fileinfo>
+    <source>youtube</source>
+    <url>https://www.youtube.com/watch?v=aqz-KE-bpKQ</url>
+    <stat_views>23390168</stat_views>
+    <license>GPL-3.0-or-later</license>
+</movie>

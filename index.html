@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>nfo-viewer — đọc sidecar .nfo</title>
+<meta name="description" content="Đọc file sidecar .nfo của Kodi / Jellyfin / Emby ngay trong trình duyệt. Không tải lên đâu cả.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <b>nfo-viewer</b>
+    <span>sidecar .nfo · Kodi / Jellyfin / Emby</span>
+  </div>
+  <input id="search" class="search" type="search" placeholder="Tìm tiêu đề, thẻ, tác giả…" aria-label="Tìm trong danh sách">
+  <button id="pickbtn" class="btn primary" type="button">Chọn file…</button>
+  <button id="json" class="btn" type="button">Xuất JSON</button>
+  <button id="csv" class="btn" type="button">Xuất CSV</button>
+  <button id="clear" class="btn" type="button">Xoá hết</button>
+  <button id="theme" class="btn" type="button" title="Đổi nền sáng / tối">Sáng · Tối</button>
+  <input id="picker" type="file" accept=".nfo" multiple class="sr" tabindex="-1" aria-hidden="true">
+</div>
+
+<div id="dropzone" class="dropzone">
+  <strong>Thả file <code>.nfo</code> vào đây</strong>
+  <span class="hint">đọc ngay trong trình duyệt · không gửi đi đâu cả · nhiều file cùng lúc</span>
+  <span id="flash" role="status" aria-live="polite"></span>
+</div>
+
+<main class="layout">
+  <section class="panel">
+    <header>
+      <span>Danh sách</span>
+      <span class="count" id="count">0/0</span>
+    </header>
+    <div class="tablewrap" id="tablewrap"></div>
+  </section>
+
+  <section class="panel">
+    <header><span>Chi tiết</span></header>
+    <div class="detail" id="detail"></div>
+  </section>
+</main>
+
+<footer class="credit">
+  <p>
+    5 file đang hiển thị là <strong>mẫu đi kèm</strong> (thư mục <code>samples/</code>),
+    để bạn thấy ngay app làm gì — trong đó có một file cố tình hỏng XML và một
+    file thiếu dữ liệu. Thả file của bạn vào để thay thế.
+  </p>
+  <p>
+    Toàn bộ việc đọc diễn ra trong trình duyệt; không có yêu cầu mạng nào mang
+    nội dung file đi. Mã nguồn theo giấy phép GPL-3.0-or-later.
+  </p>
+</footer>
+
+<script src="assets/nfo.js"></script>
+<script src="assets/samples.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

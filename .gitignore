@@ -1,0 +1,17 @@
+# Thu muc tam / he dieu hanh
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Trinh soan thao
+.vscode/
+.idea/
+*.swp
+
+# Python
+__pycache__/
+*.py[cod]
+
+# File .nfo cua nguoi dung tu keo vao thu muc nay khi thu nghiem -
+# khong phai file mau cua du an, va co the chua ten/link rieng tu.
+/*.nfo

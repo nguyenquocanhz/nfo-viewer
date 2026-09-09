@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<musicvideo>
+    <title>开局就让我双飞诡异？《诡异复苏，我成为了地府阴天子》</title>
+    <plot>Tuyển tập &amp; tổng hợp — bản Hi-Res FLAC</plot>
+    <runtime>270</runtime>
+    <studio>bilibili</studio>
+    <artist>荃集勉废</artist>
+    <uniqueid type="bilibili" default="true">BV1pA4k6xEMy</uniqueid>
+    <premiered>2026-08-29</premiered>
+    <year>2026</year>
+    <tag>动漫</tag>
+    <tag>脑洞</tag>
+    <tag>逆袭</tag>
+    <genre>动漫</genre>
+    <fileinfo>
+        <streamdetails>
+            <video>
+                <codec>h264</codec>
+                <width>852</width>
+                <height>480</height>
+                <durationinseconds>16199</durationinseconds>
+                <framerate>19.393</framerate>
+            </video>
+            <audio>
+                <codec>flac</codec>
+                <channels>2</channels>
+                <samplingrate>48000</samplingrate>
+                <bitrate>1200000</bitrate>
+            </audio>
+        </streamdetails>
+    </fileinfo>
+    <source>bilibili</source>
+    <url>https://www.bilibili.com/video/BV1pA4k6xEMy/</url>
+    <license>GPL-3.0-or-later</license>
+</musicvideo>

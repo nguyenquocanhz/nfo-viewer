@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Sidecar do mot cong cu khac sinh ra: thieu ngay dang, thieu streamdetails,
+     va dung <episodedetails> thay vi <movie>. Dung de thu phan bao thieu. -->
+<episodedetails>
+    <title>Tập 3 — Không rõ nguồn</title>
+    <season>1</season>
+    <episode>3</episode>
+    <runtime>24</runtime>
+</episodedetails>
