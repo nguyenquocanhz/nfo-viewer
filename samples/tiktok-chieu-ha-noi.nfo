@@ -16,7 +16,7 @@
         <thumb>https://cdn.example/av.jpg</thumb>
         <profile>https://www.tiktok.com/@quocanh</profile>
     </actor>
-    <uniqueid type="tiktok" default="true">7678670892490165512</uniqueid>
+    <uniqueid type="tiktok" default="true">7000000000000000001</uniqueid>
     <premiered>2026-03-14</premiered>
     <aired>2026-03-14</aired>
     <year>2026</year>
@@ -43,7 +43,7 @@
         </streamdetails>
     </fileinfo>
     <source>tiktok</source>
-    <url>https://www.tiktok.com/@quocanh/video/7678670892490165512</url>
+    <url>https://www.tiktok.com/@quocanh/video/7000000000000000001</url>
     <original_filename>Chieu Ha Noi.mp4</original_filename>
     <stat_likes>120</stat_likes>
     <stat_views>9000</stat_views>
